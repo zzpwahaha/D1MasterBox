@@ -71,12 +71,20 @@ void      setPhase();                             //Gives the command to skew th
 void      incrementPhase();                       //Changes the phase based on the encoder input
 void      displayMultiplier();                    //when changing the phase display the multipler on the LCD, otherwise blank it out
 void      clearDisplayMultiplier();               //the opposite of above
-void      updatePhaseScreen(int phase_setting);   //displays the phase on the LCD  
+void      updatePhaseScreen();   //displays the phase on the LCD  
+void      printSpace(bool drive_setting);
 
 static uint8_t  adjustment_multiplier = 1;    //to change how fast the phase is incremented by 
 
 static uint8_t demod_attenuation;        //tens place attenuation for demod 
 static uint8_t drive_attenuation;        //ones place attenuation for demod 
+
+// forward declarition  of interrupt attachment
+void ampButtonIRQ();
+void phaseButtonIRQ();
+void ampRotaryIRQ();
+void phaseRotaryIRQ();
+void resetClock();
 
 void setup() {
   // put your setup code here, to run once:
@@ -171,7 +179,7 @@ void setup() {
   Serial.print("begin demod setting: ");Serial.println(getAmpSetting(false));  
   //program attenuators
   updateAttenuators(true);
-  updateAttenuators(flase);
+  updateAttenuators(false);
 
 
   //Start sreen message
